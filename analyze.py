@@ -5,17 +5,33 @@ def welcomeUser():
 
 #get username
 def getUsername():
-    userNameFromInput =input('\nTo begin please, Enter your name: \n')
+    maxAttempts = 3
+    attempts = 0
 
-    if  (len(userNameFromInput) < 5 or not userNameFromInput.isidentifier()):
-        print('Your username has to be greater than 5 character, alphanumeric and not contain spaces')
-        userNameFromInput = generate_username()[0]
-        print('Assigning a default Username....')
+    while attempts < maxAttempts:
+        #enter username
+        inputPrompt = ''
+        if attempts == 0:
+            inputPrompt = '\nTo begin please, Enter your Username: \n'
+        elif attempts == maxAttempts -1:
+            inputPrompt = '\nFinal attempt, please try again: \n'
+        else:
+            inputPrompt = '\nPlease try again: \n'
+        userNameFromInput =input(inputPrompt)
 
+        #Validating Username
 
-    return userNameFromInput
+        if  (len(userNameFromInput) < 5 or not userNameFromInput.isidentifier()):
+            print('Your username has to be greater than 5 character, alphanumeric and not contain spaces')
+            
+        else:
+            return userNameFromInput
+        attempts += 1
+    print("Maximum attempt exhausted, Assigning a default Username....")
 
-username= getUsername()
+    return generate_username()[0]
+
+username = getUsername()
 
 #greet the users
 def greetUser(name):
