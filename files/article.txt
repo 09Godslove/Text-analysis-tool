@@ -1,0 +1,28 @@
+Nvidia and Microsoft announced Tuesday investments totaling $15 billion in AI startup Anthropic, creator of the Claude chatbot, amid frenzied spending on the technology and growing fears of a bubble.
+
+AI chip powerhouse Nvidia committed up to $10 billion while Microsoft—which owns 27 percent of Anthropic rival OpenAI—pledged up to $5 billion to the maker of Claude AI models.
+
+
+Microsoft also continues investing heavily in its own Copilot AI that runs on the company's Azure platform.
+
+The deal was part of a sweeping agreement that saw Anthropic commit to purchasing $30 billion in Microsoft's cloud computing capacity and adopt the latest versions of Nvidia's chip technology.
+
+"We're increasingly going to be customers of each other," said Microsoft CEO Satya Nadella in an online video announcing the deal.
+
+"We will use Anthropic models. They will use our infrastructure, and we'll go to market together to help our customers realize the value of AI."
+
+The investments mark a significant realignment in the generative AI sector, where competition has intensified between ChatGPT-maker OpenAI and rivals including Anthropic, but also Google, which released its latest Gemini model on Tuesday.
+
+
+California-based Anthropic was launched in 2021 by former OpenAI staff and positions itself as prioritizing safety in AI development. Its flagship product is the Claude chatbot and family of models.
+
+Tech industry rivals, which also include Amazon, Meta and Elon Musk's xAI, have been pouring tens of billions of dollars into artificial intelligence since the blockbuster launch of the first version of ChatGPT in late 2022.
+
+Nvidia, meanwhile, has become a coveted source of high-performance GPUs tailored for generative AI.
+
+With increasing talk among Wall Street analysts of an AI bubble, shares in Nvidia, the world's biggest company by market capitalization, were down slightly amid a broad sell-off in the tech sector.
+
+Microsoft's shares were down about 2.5 percent.
+
+
+Sources told CNBC that the fresh investment valued Anthropic at $350 billion, making it one of the world's most valuable companies. OpenAI was most recently valued at $500 billion.

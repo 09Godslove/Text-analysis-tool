@@ -31,6 +31,14 @@ def getUsername():
 
     return generate_username()[0]
 
+# get text from file
+def gettextfromfile():
+    f = open('files/article.txt', 'r')
+    rawText = f.read()
+    f.close()
+    
+    return rawText.replace('\n', ' ').replace('\r', '')
+
 username = getUsername()
 
 #greet the users
@@ -38,3 +46,6 @@ def greetUser(name):
     print('Welcome, ' + name)
 
 greetUser(username)
+
+articletextRaw = gettextfromfile()
+print(articletextRaw)
