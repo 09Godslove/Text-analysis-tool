@@ -60,6 +60,13 @@ def getKeySentences(sentences, patern):
         if re.search(patern, sentence.lower()):
             mathcedSentences.append(sentence)
     return mathcedSentences
+
+# get the average words per sentence, excluding puct
+def getWordsPerSentence(sentences):
+    totalWords = 0
+    for sentence in sentences:
+        totalWords += (len(sentence.split(' ')))
+    return totalWords/len(sentences)
 #greet the users
 username = getUsername()
 def greetUser(name):
@@ -76,6 +83,7 @@ articleWords = tokinizeWords(articleSentences)
 # get analytics
 searchPattern = '[0-9]|[$%€£]|thousand|million|hundred|profit|loss'
 keySentences = getKeySentences(articleSentences, searchPattern)
+wordsPersentence = getWordsPerSentence(articleSentences)
 
 # print testing
-print(keySentences)
+print(wordsPersentence)
