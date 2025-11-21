@@ -67,6 +67,17 @@ def getWordsPerSentence(sentences):
     for sentence in sentences:
         totalWords += (len(sentence.split(' ')))
     return totalWords/len(sentences)
+
+# filter tockinize words to only include actual words
+def getWordsCleaned(words):
+    cleansedList = []
+    mathcedWordsPattern = '[^a-zA-z-+—]'
+    for word in words:
+        cleansedword = word.replace('.', '').lower() 
+        if ( not re.search(mathcedWordsPattern, cleansedword)) and len(cleansedword) > 1:
+            cleansedList.append(cleansedword)
+    return cleansedList
+
 #greet the users
 username = getUsername()
 def greetUser(name):
@@ -80,10 +91,13 @@ articletextRaw = gettextfromfile()
 articleSentences = tokinizeArticle(articletextRaw)
 articleWords = tokinizeWords(articleSentences)
 
-# get analytics
+# get sentence analytics
 searchPattern = '[0-9]|[$%€£]|thousand|million|hundred|profit|loss'
 keySentences = getKeySentences(articleSentences, searchPattern)
 wordsPersentence = getWordsPerSentence(articleSentences)
 
+#get words analytics
+cleanedWordsList = getWordsCleaned(articleWords)
+
 # print testing
-print(wordsPersentence)
+print(cleanedWordsList)
