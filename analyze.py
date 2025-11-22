@@ -1,7 +1,11 @@
 from random_username.generate import generate_username
-
+# import nltk
+# nltk.download('wordnet')
+from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import sent_tokenize, word_tokenize
 import re
+
+wordLamentizer = WordNetLemmatizer()
 
 def welcomeUser():
     print('\nWelcome to the text analysis tool, I will mine and analyze a body of text you send me')
@@ -75,7 +79,7 @@ def getWordsCleaned(words):
     for word in words:
         cleansedword = word.replace('.', '').lower() 
         if ( not re.search(mathcedWordsPattern, cleansedword)) and len(cleansedword) > 1:
-            cleansedList.append(cleansedword)
+            cleansedList.append(wordLamentizer.lemmatize(cleansedword))
     return cleansedList
 
 #greet the users
