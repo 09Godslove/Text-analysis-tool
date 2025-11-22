@@ -1,6 +1,8 @@
 from random_username.generate import generate_username
-# import nltk
+import nltk
 # nltk.download('wordnet')
+# nltk.download('averaged_perceptron_tagger_eng')
+from nltk.corpus import wordnet as wn
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import sent_tokenize, word_tokenize
 import re
@@ -72,17 +74,35 @@ def getWordsPerSentence(sentences):
         totalWords += (len(sentence.split(' ')))
     return totalWords/len(sentences)
 
+postowordtag = {
+    'J': wn.ADJ,
+    'V': wn.VERB,
+    'R': wn.ADV,
+    'N': wn.NOUN
+}
+# convert treebank part of speech to wordnet part of speech
+def treeBankPOStoWordnetPos(partOfSpech):
+    """
+    Map NLTK POS tags to WordNet POS tags for lemmatization.
+    """
+    POSsartwith = partOfSpech[0]
+    if POSsartwith in postowordtag:
+        return postowordtag[POSsartwith]
+    return wn.NOUN
+
 # filter tockinize words to only include actual words
-def getWordsCleaned(words):
+def getWordsCleaned(POSWordTupes):
     cleansedList = []
     mathcedWordsPattern = '[^a-zA-z-+—]'
-    for word in words:
+    for POSWordTuple in POSWordTupes:
+        word = POSWordTuple[0]
+        pos = POSWordTuple[1]
         cleansedword = word.replace('.', '').lower() 
         if ( not re.search(mathcedWordsPattern, cleansedword)) and len(cleansedword) > 1:
-            cleansedList.append(wordLamentizer.lemmatize(cleansedword))
+            cleansedList.append(wordLamentizer.lemmatize(cleansedword,treeBankPOStoWordnetPos(pos)))
     return cleansedList
 
-#greet the users
+# greet the users
 username = getUsername()
 def greetUser(name):
     print('Welcome, ' + name)
@@ -94,6 +114,7 @@ articletextRaw = gettextfromfile()
 #Tokenize text
 articleSentences = tokinizeArticle(articletextRaw)
 articleWords = tokinizeWords(articleSentences)
+articleWordsPOStag = nltk.pos_tag(articleWords)
 
 # get sentence analytics
 searchPattern = '[0-9]|[$%€£]|thousand|million|hundred|profit|loss'
@@ -101,7 +122,7 @@ keySentences = getKeySentences(articleSentences, searchPattern)
 wordsPersentence = getWordsPerSentence(articleSentences)
 
 #get words analytics
-cleanedWordsList = getWordsCleaned(articleWords)
+cleanedWordsList = getWordsCleaned(articleWordsPOStag)
 
 # print testing
 print(cleanedWordsList)
