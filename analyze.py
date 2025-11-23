@@ -6,10 +6,12 @@ import nltk
 from nltk.corpus import wordnet as wn, stopwords
 # nltk.download('stopwords')
 from nltk.stem import WordNetLemmatizer
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.tokenize import sent_tokenize, word_tokenize
 from wordcloud import WordCloud
 stopWords = set(stopwords.words('english'))
 wordLamentizer = WordNetLemmatizer()
+sentimentAnalyzer = SentimentIntensityAnalyzer()
 
 def welcomeUser():
     print('\nWelcome to the text analysis tool, I will mine and analyze a body of text you send me')
@@ -132,5 +134,8 @@ separator = ' '
 wordcloud = WordCloud(width = 1000, height = 200, 
                       background_color='khaki', random_state = 1, colormap='Pastel1', collocations = False).generate(separator.join(cleanedWordsList))
 wordcloud.to_file('results/wordcloud.png')
+
+# find word sentiment
+sentimentResult = sentimentAnalyzer.polarity_scores(articletextRaw)
 # print testing
-print('Done')
+print(sentimentResult)
