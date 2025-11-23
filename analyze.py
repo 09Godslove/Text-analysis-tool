@@ -7,8 +7,8 @@ from nltk.corpus import wordnet as wn, stopwords
 # nltk.download('stopwords')
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import sent_tokenize, word_tokenize
+from wordcloud import WordCloud
 stopWords = set(stopwords.words('english'))
-print(stopWords)
 wordLamentizer = WordNetLemmatizer()
 
 def welcomeUser():
@@ -76,6 +76,7 @@ def getWordsPerSentence(sentences):
         totalWords += (len(sentence.split(' ')))
     return totalWords/len(sentences)
 
+# pos dictionary
 postowordtag = {
     'J': wn.ADJ,
     'V': wn.VERB,
@@ -126,5 +127,10 @@ wordsPersentence = getWordsPerSentence(articleSentences)
 #get words analytics
 cleanedWordsList = getWordsCleaned(articleWordsPOStag)
 
+# Generate word cloud
+separator = ' '
+wordcloud = WordCloud(width = 1000, height = 200, 
+                      background_color='khaki', random_state = 1, colormap='Pastel1', collocations = False).generate(separator.join(cleanedWordsList))
+wordcloud.to_file('results/wordcloud.png')
 # print testing
-print(cleanedWordsList)
+print('Done')
