@@ -1,6 +1,5 @@
 from random_username.generate import generate_username
-import re
-import nltk
+import re, nltk, json
 # nltk.download('wordnet')
 # nltk.download('averaged_perceptron_tagger_eng')
 from nltk.corpus import wordnet as wn, stopwords
@@ -131,11 +130,28 @@ cleanedWordsList = getWordsCleaned(articleWordsPOStag)
 
 # Generate word cloud
 separator = ' '
+wordCloudPath = 'results/wordcloud.png'
 wordcloud = WordCloud(width = 1000, height = 200, 
                       background_color='khaki', random_state = 1, colormap='Pastel1', collocations = False).generate(separator.join(cleanedWordsList))
-wordcloud.to_file('results/wordcloud.png')
+wordcloud.to_file(wordCloudPath)
 
 # find word sentiment
 sentimentResult = sentimentAnalyzer.polarity_scores(articletextRaw)
+
+# collate analytics into one dictionary
+finalResult = {
+    'username': username,
+    'data': {
+        'KeySentences': keySentences,
+        'Wordspersentences': round(wordsPersentence, 1),
+        'sentiment': sentimentResult,
+        'Word Cloud path': wordCloudPath
+    },
+    'metadata':{
+        'TotalSentence': len(articleSentences),
+        'TotalWords': len(cleanedWordsList)
+    }
+}
+finalresultJson = json.dumps(finalResult, indent=4)
 # print testing
-print(sentimentResult)
+print(finalresultJson)
