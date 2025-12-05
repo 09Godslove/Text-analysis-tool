@@ -45,17 +45,24 @@ def getNews(company):
 headers = {
 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
 }
+
+def extractArticleTestFromHTML(soup):
+    allText = ''
+    result = soup.find_all("div", class_=["body", "post-content", "article-body", "single-post-content"])
+    for res in result:
+        allText += res.text
+    return allText
 def extarctNewsarticles(NewsArticles):
-    # url = NewsArticles[0]['link']
+    allArticleText = ''
     for Article in NewsArticles:
         url = Article['link']
         print(url)
-        if "barrons.com" in url or "wsj.com" in url:
-            print("Should skip (known paywall site)")
-            continue
-        page = requests.get(url, headers=headers)
-        soup = BeautifulSoup(page.text, 'html.parser')
-        print('no skip')
+        if "barrons.com" not in url or "wsj.com" not in url:
+            page = requests.get(url, headers=headers)
+            soup = BeautifulSoup(page.text, 'html.parser')
+        allArticleText += extractArticleTestFromHTML(soup)
+    return allArticleText
+    
 
 def getCompanystockInfo (TickerSymbol):
     # get data from yahoo finance
@@ -66,6 +73,7 @@ def getCompanystockInfo (TickerSymbol):
     PriceHistory = getStockhistory(company)
     futureEarningDates = getEarningDates(company)
     newsArticles = getNews(company)
-    extarctNewsarticles(newsArticles)
+    allNewsArticleText = extarctNewsarticles(newsArticles)
+    print(allNewsArticleText)
 
 getCompanystockInfo('MSFT')
