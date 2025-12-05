@@ -1,6 +1,7 @@
 import yfinance as yf
 import requests
 from datetime import datetime
+from bs4 import BeautifulSoup
 
 def etractbasicInfo (data):
     keysToExtract = ['longName','website','sector','fullTimeEmployees', 'marketCap', 'totalCash', 'trailingEps' ]
@@ -45,9 +46,16 @@ headers = {
 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
 }
 def extarctNewsarticles(NewsArticles):
-    url = NewsArticles[0]['link']
-    page = requests.get(url, headers=headers)
-    print(page.text)
+    # url = NewsArticles[0]['link']
+    for Article in NewsArticles:
+        url = Article['link']
+        print(url)
+        if "barrons.com" in url or "wsj.com" in url:
+            print("Should skip (known paywall site)")
+            continue
+        page = requests.get(url, headers=headers)
+        soup = BeautifulSoup(page.text, 'html.parser')
+        print('no skip')
 
 def getCompanystockInfo (TickerSymbol):
     # get data from yahoo finance
