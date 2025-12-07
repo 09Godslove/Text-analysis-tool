@@ -57,7 +57,6 @@ def extarctNewsarticles(NewsArticles):
     allArticleText = ''
     for Article in NewsArticles:
         url = Article['link']
-        print(url)
         if "barrons.com" not in url or "wsj.com" not in url:
             page = requests.get(url, headers=headers)
             soup = BeautifulSoup(page.text, 'html.parser')
@@ -77,11 +76,16 @@ def getCompanystockInfo (TickerSymbol):
     allNewsArticleText = extarctNewsarticles(newsArticles)
     # print(allNewsArticleText)
     finalResult = analyze.analyzeAticle(allNewsArticleText)
-    print(finalResult)
-    finalresultJson = json.dumps(finalResult, indent=4)
-    # print testing
-    print(finalresultJson)
-    return finalresultJson
-getCompanystockInfo('MSFT')
+    companyStockAnalysisResult = {
+        'basicinfo': basicinfo,
+        'PriceHistory': PriceHistory,
+        'futureEarningDates':futureEarningDates,
+        'newsArticles':newsArticles,
+        'finalResult':finalResult
+    }
+    return companyStockAnalysisResult
+
+# StickInnfo = getCompanystockInfo('MSFT')
+# print(json.dumps(StickInnfo, indent=4))
 
 
