@@ -1,9 +1,6 @@
 from random_username.generate import generate_username
 import re, nltk, json
-# nltk.download('wordnet')
-# nltk.download('averaged_perceptron_tagger_eng')
 from nltk.corpus import wordnet as wn, stopwords
-# nltk.download('stopwords')
 from nltk.stem import WordNetLemmatizer
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.tokenize import sent_tokenize, word_tokenize
@@ -106,52 +103,54 @@ def getWordsCleaned(POSWordTupes):
             cleansedList.append(wordLamentizer.lemmatize(cleansedword,treeBankPOStoWordnetPos(pos)))
     return cleansedList
 
-# greet the users
-username = getUsername()
-def greetUser(name):
-    print('Welcome, ' + name)
-greetUser(username)
 
 #Get text from file
 articletextRaw = gettextfromfile()
 
-#Tokenize text
-articleSentences = tokinizeArticle(articletextRaw)
-articleWords = tokinizeWords(articleSentences)
-articleWordsPOStag = nltk.pos_tag(articleWords)
+def analyzeAticle(articleTobeAnalyzed):
 
-# get sentence analytics
-searchPattern = '[0-9]|[$%€£]|thousand|million|hundred|profit|loss'
-keySentences = getKeySentences(articleSentences, searchPattern)
-wordsPersentence = getWordsPerSentence(articleSentences)
+    #Tokenize text
+    articleSentences = tokinizeArticle(articleTobeAnalyzed)
+    articleWords = tokinizeWords(articleSentences)
+    articleWordsPOStag = nltk.pos_tag(articleWords)
 
-#get words analytics
-cleanedWordsList = getWordsCleaned(articleWordsPOStag)
+    # get sentence analytics
+    searchPattern = '[0-9]|[$%€£]|thousand|million|hundred|profit|loss'
+    keySentences = getKeySentences(articleSentences, searchPattern)
+    wordsPersentence = getWordsPerSentence(articleSentences)
 
-# Generate word cloud
-separator = ' '
-wordCloudPath = 'results/wordcloud.png'
-wordcloud = WordCloud(width = 1000, height = 200, 
-                      background_color='khaki', random_state = 1, colormap='Pastel1', collocations = False).generate(separator.join(cleanedWordsList))
-wordcloud.to_file(wordCloudPath)
+    #get words analytics
+    cleanedWordsList = getWordsCleaned(articleWordsPOStag)
 
-# find word sentiment
-sentimentResult = sentimentAnalyzer.polarity_scores(articletextRaw)
+    # Generate word cloud
+    separator = ' '
+    wordCloudPath = 'results/wordcloud.png'
+    wordcloud = WordCloud(width = 1000, height = 200, 
+                        background_color='khaki', random_state = 1, colormap='Pastel1', collocations = False).generate(separator.join(cleanedWordsList))
+    wordcloud.to_file(wordCloudPath)
 
-# collate analytics into one dictionary
-finalResult = {
-    'username': username,
-    'data': {
-        'KeySentences': keySentences,
-        'Wordspersentences': round(wordsPersentence, 1),
-        'sentiment': sentimentResult,
-        'Word Cloud path': wordCloudPath
-    },
-    'metadata':{
-        'TotalSentence': len(articleSentences),
-        'TotalWords': len(cleanedWordsList)
+    # find word sentiment
+    sentimentResult = sentimentAnalyzer.polarity_scores(articleTobeAnalyzed)
+
+    # collate analytics into one dictionary
+    finalResult = {
+        'data': {
+            'KeySentences': keySentences,
+            'Wordspersentences': round(wordsPersentence, 1),
+            'sentiment': sentimentResult,
+            'Word Cloud path': wordCloudPath
+        },
+        'metadata':{
+            'TotalSentence': len(articleSentences),
+            'TotalWords': len(cleanedWordsList)
+        }
     }
-}
-finalresultJson = json.dumps(finalResult, indent=4)
-# print testing
-print(finalresultJson)
+    return finalResult
+
+def runOnbegining():
+        
+    # greet the users
+    username = getUsername()
+    def greetUser(name):
+        print('Welcome, ' + name)
+    greetUser(username)
