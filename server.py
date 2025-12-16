@@ -1,4 +1,5 @@
 from flask import Flask, abort
+from stockAnalyzer import getCompanystockInfo
 
 
 app = Flask(__name__)
@@ -13,10 +14,9 @@ def helloWorld():
 def analyzeStock(ticker):
     if  (len(ticker) > 5 or not ticker.isidentifier()):
         abort(400, 'Invalid ticker format')
-    return{
-        'data': 'Analysis for ' + ticker + ' is ongoing'
-    }
-
+    else:
+        analyze = getCompanystockInfo(ticker)
+    return analyze
 
 if __name__ == '__main__':
 
