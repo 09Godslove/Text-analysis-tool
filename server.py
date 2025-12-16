@@ -9,6 +9,12 @@ app = Flask(__name__)
 def helloWorld():
     return 'Flask server is running'
 
+@app.route('/analyze-stock')
+def analyzeStock():
+    return{
+        'data': 'Analysis is ongoing'
+    }
+
 
 if __name__ == '__main__':
 
