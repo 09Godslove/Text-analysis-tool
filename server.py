@@ -9,10 +9,10 @@ app = Flask(__name__)
 def helloWorld():
     return 'Flask server is running'
 
-@app.route('/analyze-stock')
-def analyzeStock():
+@app.route('/analyze-stock/<ticker>')
+def analyzeStock(ticker):
     return{
-        'data': 'Analysis is ongoing'
+        'data': 'Analysis for ' + ticker + ' is ongoing'
     }
 
 
