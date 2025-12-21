@@ -31,6 +31,7 @@ def getEarningDates(company):
     currentDate = datetime.now()
     futureDates = [date.strftime('%Y-%m-%d') for date in dateObjects if date >currentDate]
     return futureDates
+
 def getNews(company):
     newsList = company.news
     allNewsArticles = []
@@ -70,6 +71,8 @@ def getCompanystockInfo (TickerSymbol):
 
     # collect all basic info
     basicinfo = etractbasicInfo(company.info) 
+    if not basicinfo['longName']:
+        raise NameError ('Could not find ticker, it may have been dislisted or does not exist')
     PriceHistory = getStockhistory(company)
     futureEarningDates = getEarningDates(company)
     newsArticles = getNews(company)

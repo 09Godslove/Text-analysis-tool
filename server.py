@@ -14,8 +14,12 @@ def helloWorld():
 def analyzeStock(ticker):
     if  (len(ticker) > 5 or not ticker.isidentifier()):
         abort(400, 'Invalid ticker format')
-    else:
+    try:
         analyze = getCompanystockInfo(ticker)
+    except NameError as e:
+        abort(404, e)
+    except:
+        abort(500, 'Something went wrong with your stock analysis')
     return analyze
 
 if __name__ == '__main__':
