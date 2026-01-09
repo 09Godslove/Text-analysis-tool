@@ -128,7 +128,7 @@ def analyzeAticle(articleTobeAnalyzed):
     separator = ' '
     wordCloudPath = 'results/wordcloud.png'
     wordcloud = WordCloud(width = 1000, height = 200, 
-                        background_color='white', random_state = 1, colormap='Pastel1', collocations = False).generate(separator.join(cleanedWordsList))
+                        background_color='grey', random_state = 1, colormap='Pastel1', collocations = False).generate(separator.join(cleanedWordsList))
     # wordcloud.to_file(wordCloudPath)
     img = wordcloud.to_image()
     buffer = BytesIO()
@@ -146,7 +146,7 @@ def analyzeAticle(articleTobeAnalyzed):
             'Wordspersentences': round(wordsPersentence, 1),
             'sentiment': sentimentResult,
             'Word Cloud path': wordCloudPath,
-            'Encoded Wordcloud': img_base64
+            'EncodedWordcloud': img_base64
         },
         'metadata':{
             'TotalSentence': len(articleSentences),
