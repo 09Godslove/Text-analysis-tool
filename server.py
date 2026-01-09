@@ -2,6 +2,11 @@ from flask import Flask, abort, request
 from stockAnalyzer import getCompanystockInfo
 from analyze import analyzeAticle
 from flask_cors import CORS
+import json
+
+f = open("./test/data.json")
+stockTest = json.load(f)
+
 
 app = Flask(__name__)
 CORS(app)
@@ -13,6 +18,7 @@ def helloWorld():
 
 @app.route('/analyze-stock/<ticker>', methods= ['GET'])
 def analyzeStock(ticker):
+    # return stockTest
     if  (len(ticker) > 5 or not ticker.isidentifier()):
         abort(400, 'Invalid ticker format')
     try:
