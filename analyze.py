@@ -1,3 +1,5 @@
+import base64
+from io import BytesIO
 from random_username.generate import generate_username
 import re, nltk, json
 from nltk.corpus import wordnet as wn, stopwords
@@ -126,8 +128,13 @@ def analyzeAticle(articleTobeAnalyzed):
     separator = ' '
     wordCloudPath = 'results/wordcloud.png'
     wordcloud = WordCloud(width = 1000, height = 200, 
-                        background_color='khaki', random_state = 1, colormap='Pastel1', collocations = False).generate(separator.join(cleanedWordsList))
-    wordcloud.to_file(wordCloudPath)
+                        background_color='white', random_state = 1, colormap='Pastel1', collocations = False).generate(separator.join(cleanedWordsList))
+    # wordcloud.to_file(wordCloudPath)
+    img = wordcloud.to_image()
+    buffer = BytesIO()
+    img.save(buffer, format="PNG")
+    buffer.seek(0)
+    img_base64 = base64.b64encode(buffer.read()).decode("utf-8")
 
     # find word sentiment
     sentimentResult = sentimentAnalyzer.polarity_scores(articleTobeAnalyzed)
@@ -138,7 +145,8 @@ def analyzeAticle(articleTobeAnalyzed):
             'KeySentences': keySentences,
             'Wordspersentences': round(wordsPersentence, 1),
             'sentiment': sentimentResult,
-            'Word Cloud path': wordCloudPath
+            'Word Cloud path': wordCloudPath,
+            'Encoded Wordcloud': img_base64
         },
         'metadata':{
             'TotalSentence': len(articleSentences),
