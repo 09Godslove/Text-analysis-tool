@@ -18,7 +18,7 @@ def helloWorld():
 
 @app.route('/analyze-stock/<ticker>', methods= ['GET'])
 def analyzeStock(ticker):
-    # return stockTest
+    return stockTest
     if  (len(ticker) > 5 or not ticker.isidentifier()):
         abort(400, 'Invalid ticker format')
     try:
