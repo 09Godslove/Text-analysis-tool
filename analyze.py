@@ -2,6 +2,7 @@ import base64
 from io import BytesIO
 from random_username.generate import generate_username
 import re, nltk, json
+nltk.download('stopwords')
 from nltk.corpus import wordnet as wn, stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
